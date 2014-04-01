@@ -28,9 +28,9 @@ declare -a FILES_TO_SYMLINK=(
 
 declare -a NEW_DIRECTORIES=(
     "$HOME/archive"
-    "$HOME/Downloads/torrents"
+    "$HOME/code"
     "$HOME/projects"
-    "$HOME/server"
+    "$HOME/torrents"
 )
 
 declare dotfiles_directory="$HOME/projects/dotfiles"
