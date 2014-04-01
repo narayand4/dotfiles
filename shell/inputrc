@@ -1,0 +1,8 @@
+# Disable beeping and window flashing
+set bell-style none
+
+# Use case-insensitive TAB autocompletion
+set completion-ignore-case on
+
+# Auto list TAB completions
+set show-all-if-ambiguous off
