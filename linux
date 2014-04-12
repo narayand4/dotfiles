@@ -38,7 +38,7 @@ log_info "Installing sqlite3, for prototyping database-backed rails apps"
  sudo apt-get -y install libsqlite3-dev sqlite3
 
 log_info "Installing Postgres, a good open source relational database ..."
-  sudo apt-get -y install postgresql postgresql-server-dev-all
+  sudo apt-get -y install postgresql postgresql-server-dev-all postgresql-contrib
 
 log_info "Installing Redis, a good key-value database ..."
   sudo apt-get -y install redis-server
