@@ -1,31 +1,18 @@
 #!/usr/bin/env bash
-### end common-components/bash-shebang
 
-# Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
-# desktop, no haters here) into an awesome development machine.
+# Install Rails
 
-# This file is auto-generated. Do not edit it by hand unless you know what
-# you're doing. Please see 'CONTRIBUTING.md' for more information.
-
-# bash ./linux
-
-### common-components/exit-trap
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
-### end common-components/exit-trap
-
-### common-components/shared-functions
 log_info() {
-  # Print output in purple
   printf "\n\e[0;35m $1\e[0m\n\n"
 }
 
-sudo apt-get update
-### end common-components/shared-functions
+log_info "Updating Packages ..."
+  sudo apt-get update
 
-### linux-components/debian-derivative-packages
-log_info "Installing git, for source control management ..."
+log_info "Installing Git ..."
   sudo apt-get -y install git
 
 log_info "Installing base ruby build dependencies ..."
@@ -34,51 +21,20 @@ log_info "Installing base ruby build dependencies ..."
 log_info "Installing libraries for common gem dependencies ..."
   sudo apt-get -y install libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
 
-log_info "Installing sqlite3, for prototyping database-backed rails apps"
+log_info "Installing sqlite3 ..."
  sudo apt-get -y install libsqlite3-dev sqlite3
 
-log_info "Installing Postgres, a good open source relational database ..."
+log_info "Installing Postgres ..."
   sudo apt-get -y install postgresql postgresql-server-dev-all postgresql-contrib
 
-log_info "Installing Redis, a good key-value database ..."
+log_info "Installing Redis ..."
   sudo apt-get -y install redis-server
-
-log_info "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  sudo apt-get -y install exuberant-ctags
-
-log_info "Installing vim ..."
-  sudo apt-get -y install vim-gtk
-
-log_info "Installing tmux, to save project state and switch between projects ..."
-  sudo apt-get -y install tmux
-
-log_info "Installing ImageMagick, to crop and resize images ..."
-  sudo apt-get -y install imagemagick
-
-log_info "Installing watch, to execute a program periodically and show the output ..."
-  sudo apt-get -y install watch
 
 log_info "Installing curl ..."
   sudo apt-get -y install curl
-### end linux-components/debian-derivative-packages
 
-### linux-components/silver-searcher-from-source
-if ! which ag &>/dev/null; then
-  log_info "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-    git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-    sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
-    sh /tmp/the_silver_searcher/build.sh
-    cd /tmp/the_silver_searcher
-    sh build.sh
-    sudo make install
-    cd
-    rm -rf /tmp/the_silver_searcher
-fi
-### end linux-components/silver-searcher-from-source
-
-### linux-components/rbenv
 if [[ ! -d "$HOME/.rbenv" ]]; then
-  log_info "Installing rbenv, to change Ruby versions ..."
+  log_info "Installing rbenv ..."
     git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
 
     if ! grep -qs "rbenv init" ~/.bashrc; then
@@ -99,9 +55,7 @@ if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
   log_info "Installing ruby-build, to install Rubies ..."
     git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 fi
-### end linux-components/rbenv
 
-### common-components/ruby-environment
 RUBY_VERSION="2.1.1"
 
 log_info "Installing Ruby $RUBY_VERSION ..."
@@ -117,32 +71,24 @@ log_info "Updating to latest Rubygems version ..."
 log_info "Installing Rails ..."
   gem install rails -V
 
-log_info "Installing Bundler to install project-specific Ruby gems ..."
+log_info "Installing Bundler ..."
   gem install bundler --no-document --pre
-### end common-components/ruby-environment
 
-### linux-components/bundler
 log_info "Configuring Bundler for faster, parallel gem installation ..."
   number_of_cores=$(nproc)
   bundle config --global jobs $((number_of_cores - 1))
-### end linux-components/bundler
+  
 
-### linux-components/heroku
+# Custom Packages
+
+log_info "Installing ImageMagick ..."
+  sudo apt-get -y install imagemagick
+
+log_info "Installing watch, to execute a program periodically and show the output ..."
+  sudo apt-get -y install watch
+
 log_info "Installing Heroku CLI client ..."
   curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-log_info "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
-  heroku plugins:install git://github.com/ddollar/heroku-config.git
-### end linux-components/heroku
-
-### linux-components/github
-# log_info "Installing GitHub CLI client ..."
-#   curl http://hub.github.com/standalone -sLo ~/.bin/hub
-#   chmod +x ~/.bin/hub
-### end linux-components/github
-
-
-### custom
 
 log_info "Installing rake ..."
   sudo apt-get -y install rake
@@ -162,12 +108,12 @@ log_info "Installing Sublime Text 3 ..."
   sudo apt-get update
   sudo apt-get -y install sublime-text-installer
 
+log_info "Installing youtube-dl ..."
+  sudo apt-get -y install youtube-dl
+
 log_info "Installing Google Chrome ..."
   cd /tmp
   wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb
   sudo dpkg -i google-chrome-stable_current_i386.deb
   cd
-
-### end custom
-
-
+  
