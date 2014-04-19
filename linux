@@ -111,7 +111,7 @@ log_info "Installing youtube-dl ..."
   sudo apt-get -y install youtube-dl
 
 log_info "Installing VLC ..."
-  sudo apt-get install vlc browser-plugin-vlc
+  sudo apt-get -y install vlc browser-plugin-vlc
 
 log_info "Installing Chromium ..."
   sudo apt-get -y install chromium-browser
