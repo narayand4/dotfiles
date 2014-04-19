@@ -97,7 +97,6 @@ log_info "Installing ubuntu-restricted-extras ..."
   sudo apt-get -y install ubuntu-restricted-extras
 
 log_info "Installing Node.js ..."
-  sudo apt-get update
   sudo apt-get -y install python-software-properties python g++ make
   sudo add-apt-repository ppa:chris-lea/node.js
   sudo apt-get update
@@ -111,9 +110,15 @@ log_info "Installing Sublime Text 3 ..."
 log_info "Installing youtube-dl ..."
   sudo apt-get -y install youtube-dl
 
+log_info "Installing VLC ..."
+  sudo apt-get install vlc browser-plugin-vlc
+
+log_info "Installing Chromium ..."
+  sudo apt-get -y install chromium-browser
+
 log_info "Installing Google Chrome ..."
   cd /tmp
-  wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   sudo dpkg -i google-chrome-stable_current_i386.deb
   cd
   
