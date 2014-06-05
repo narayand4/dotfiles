@@ -61,14 +61,8 @@ log_info "Starting Postgres ..."
 log_info "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
 
-  if ! grep -qs "rbenv init" ~/.bash_profile; then
-    printf '\n# load rbenv\n' >> ~/.bash_profile
-    printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.bash_profile
-    printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.bash_profile
-
-    log_info "Enable shims and autocompletion ..."
-      eval "$(rbenv init -)"
-  fi
+log_info "Enable shims and autocompletion ..."
+  eval "$(rbenv init -)"
 
   export PATH="$HOME/.rbenv/bin:$PATH"
 

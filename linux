@@ -33,18 +33,10 @@ log_info "Installing Redis ..."
 log_info "Installing curl ..."
   sudo apt-get -y install curl
 
-if [[ ! -d "$HOME/.rbenv" ]]; then
-  log_info "Installing rbenv ..."
-    git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-
-    if ! grep -qs "rbenv init" ~/.bashrc; then
-      printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.bashrc
-      printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.bashrc
-    fi
-
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
-fi
+log_info "Installing rbenv ..."
+  git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
 
 if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then
   log_info "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
@@ -77,7 +69,6 @@ log_info "Installing Bundler ..."
 log_info "Configuring Bundler for faster, parallel gem installation ..."
   number_of_cores=$(nproc)
   bundle config --global jobs $((number_of_cores - 1))
-  
 
 # Custom Packages
 
@@ -121,4 +112,3 @@ log_info "Installing Google Chrome ..."
   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   sudo dpkg -i google-chrome-stable_current_amd64.deb
   cd
-  

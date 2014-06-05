@@ -22,6 +22,9 @@ load_dotfiles() {
     # Some things are OS specific, deal with it
     if [ "$osname" == "Darwin" ]; then
         os="mac"
+
+        # recommended by brew doctor
+        export PATH="/usr/local/bin:$PATH"
     elif [ "$osname" == "Linux" ]; then
         os="linux"
 
@@ -60,3 +63,7 @@ fi
 load_dotfiles
 unset load_dotfiles
 unset check_linux_release
+
+# load rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - --no-rehash)"
