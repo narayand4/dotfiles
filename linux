@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Install Rails
-
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
@@ -38,23 +36,23 @@ log_info "Installing rbenv ..."
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
 
-if [[ ! -d "$HOME/.rbenv/plugins/rbenv-gem-rehash" ]]; then
-  log_info "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-    git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
-fi
+log_info "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
+  git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 
-if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
-  log_info "Installing ruby-build, to install Rubies ..."
-    git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-fi
+log_info "Installing ruby-build, to install Rubies ..."
+  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
-RUBY_VERSION="2.1.1"
+ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
-log_info "Installing Ruby $RUBY_VERSION ..."
-  rbenv install $RUBY_VERSION
+log_info "Installing Ruby $ruby_version ..."
+  if [ "$ruby_version" = "2.1.1" ]; then
+    curl -fsSL https://gist.github.com/mislav/a18b9d7f0dc5b9efc162.txt | rbenv install --patch 2.1.1
+  else
+    rbenv install "$ruby_version"
+  fi
 
-log_info "Setting $RUBY_VERSION as global default Ruby ..."
-  rbenv global $RUBY_VERSION
+log_info "Setting $ruby_version as global default Ruby ..."
+  rbenv global $ruby_version
   rbenv rehash
 
 log_info "Updating to latest Rubygems version ..."
